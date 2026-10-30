@@ -1,0 +1,596 @@
+.brand-logo {
+    width: 140px;
+    height: 45px;
+    object-fit: contain;
+    display: block;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+@media (max-width: 576px) {
+    .brand-logo {
+        width: 100px;
+        height: 40px;
+    }
+}
+
+
+  :root {
+  --brand : #722F42;--gold : #B8914F;--ink : #292929;--muted : #777777;--line : #EEEEEE;--soft : #F8F6F5;--white : #FFFFFF;
+}
+* {
+  box-sizing : border-box; margin: 0; padding : 0;
+}
+body {
+  font-family : Inter, system-ui, -apple-system, sans-serif; color: var(--ink); background: var(--white); -webkit-font-smoothing : antialiased;
+}
+a {
+  color : inherit; text-decoration : none;
+}
+button {
+  font : inherit; cursor : pointer;
+}
+h1, h2, h3 {
+  font-weight : 600;
+}
+h1, h2.serif {
+  font-family : 'Playfair Display', Georgia, serif;
+}
+img, svg {
+  display : block; max-width : 100%;
+}
+[hidden] {
+  display : none !important;
+}
+.page {
+  max-width : 1200px; margin: 0 auto; background: var(--white); min-height : 100vh;
+}
+.icon-btn {
+  background : none; border: 0; color: inherit; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; position : relative;
+}
+  .icon-btn : focus-visible, .btn : focus-visible, .chip : focus-visible, a : focus-visible {
+  outline: 2px solid var(--gold); outline-offset : 2px;
+}
+header.top {
+  background : var(--brand); color: var(--white); padding: 8px 12px; display: flex; align-items: center; gap: 4px; position: sticky; top: 0; z-index : 10;
+}
+header.top .brand {
+  flex : 1; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 600; letter-spacing: .5px; padding-left : 4px;
+}
+.badge-count {
+  position : absolute; top: 4px; right: 2px; background: var(--white); color: var(--brand); font-size: 11px; font-weight: 600; border-radius: 999px; min-width: 18px; height: 18px; line-height: 18px; text-align: center; padding : 0 4px;
+}
+.searchbar {
+  padding : 10px 16px; background: var(--soft); border-bottom: 1px solid var(--line); position: sticky; top: 60px; z-index : 9;
+}
+.searchbar input {
+  width : 100%; height: 44px; border: 1px solid #DDD; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 15px; background : var(--white);
+}
+  .searchbar input : focus {
+  outline: none; border-color : var(--brand);
+}
+.overlay {
+  position : fixed; inset: 0; background: rgba(41, 41, 41, .45); z-index: 20; opacity: 0; pointer-events: none; transition : opacity .3s;
+}
+.overlay.show {
+  opacity : 1; pointer-events : auto;
+}
+.side-menu {
+  position : fixed; top: 0; left: 0; height: 100%; width: min(300px, 84%); background: var(--white); z-index: 30; transform: translateX(-100%); transition: transform .3s ease; box-shadow: 4px 0 16px rgba(41, 41, 41, .15); padding: 16px 20px; overflow-y: auto; display: flex; flex-direction : column;
+}
+.side-menu.open {
+  transform : translateX(0);
+}
+.side-menu .head {
+  display : flex; justify-content: space-between; align-items: center; margin-bottom : 8px;
+}
+.side-menu .head span {
+  font-family : 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 600; color : var(--brand);
+}
+.side-menu button.link, .side-menu a {
+  display : flex; align-items: center; min-height: 48px; color: var(--ink); font-size: 15px; border: 0; border-bottom: 1px solid var(--line); background: none; text-align: left; width : 100%;
+}
+  .side-menu a : last-child, .side-menu button.link : last-child {
+  border-bottom : 0;
+}
+.side-menu .hl {
+  color : var(--brand); font-weight : 600;
+}
+.drawer {
+  position : fixed; top: 0; right: 0; height: 100%; width: min(380px, 92%); background: var(--white); z-index: 30; transform: translateX(100%); transition: transform .3s ease; box-shadow: -4px 0 16px rgba(41, 41, 41, .15); display: flex; flex-direction : column;
+}
+.drawer.open {
+  transform : translateX(0);
+}
+.drawer header.dh {
+  display : flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom : 1px solid var(--line);
+}
+.drawer header.dh h2 {
+  font-size : 20px; color : var(--brand);
+}
+.drawer .body {
+  flex : 1; overflow-y: auto; padding : 8px 20px;
+}
+.drawer .foot {
+  padding : 16px 20px; border-top : 1px solid var(--line);
+}
+.cart-row {
+  display : flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items : center;
+}
+.cart-row .thumb {
+  width : 64px; height: 80px; flex: 0 0 64px; border-radius: 8px; overflow : hidden;
+}
+.cart-row .thumb svg {
+  width : 100%; height : 100%;
+}
+.cart-row .meta {
+  flex : 1; min-width : 0;
+}
+.cart-row .meta h4 {
+  font-size : 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow : ellipsis;
+}
+.cart-row .meta p {
+  font-size : 13px; color: var(--muted); margin-top : 2px;
+}
+.qty {
+  display : inline-flex; align-items: center; border: 1px solid #DDD; border-radius: 8px; margin-top : 6px;
+}
+.qty button {
+  background : none; border: 0; min-width: 32px; min-height: 32px; font-size: 16px; color : var(--brand);
+}
+.qty span {
+  min-width : 24px; text-align: center; font-size : 14px;
+}
+.remove {
+  background : none; border: 0; color: var(--muted); font-size: 12px; text-decoration: underline; min-height : 32px;
+}
+.subtotal {
+  display : flex; justify-content: space-between; font-weight: 600; margin-bottom : 12px;
+}
+.empty {
+  color : var(--muted); text-align: center; padding: 40px 0; font-size : 14px;
+}
+.modal {
+  position : fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding : 16px;
+}
+.modal .scrim {
+  position : absolute; inset: 0; background : rgba(41, 41, 41, .5);
+}
+.modal .panel {
+  position : relative; background: var(--white); border-radius: 14px; width: 100%; max-width: 420px; padding: 24px 20px; max-height: 90vh; overflow-y : auto;
+}
+.modal h2 {
+  font-size : 22px; color: var(--brand); margin-bottom : 6px;
+}
+.modal p.sub {
+  color : var(--muted); font-size: 14px; margin-bottom : 16px;
+}
+.field {
+  display : flex; gap : 8px;
+}
+.field input {
+  flex : 1; min-width: 0; height: 48px; border: 1px solid #DDD; border-radius: 10px; padding: 0 14px; font: inherit; font-size : 15px;
+}
+  .field input : focus {
+  outline: none; border-color : var(--brand);
+}
+.err {
+  color : #B3261E; font-size: 13px; margin-top: 8px; min-height : 18px;
+}
+.steps {
+  list-style : none; margin-top : 16px;
+}
+.steps li {
+  display : flex; gap: 12px; padding: 8px 0; color: var(--muted); font-size : 14px;
+}
+  .steps li : :before {
+  content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--line); margin-top: 4px; flex : 0 0 12px;
+}
+.steps li.done {
+  color : var(--ink);
+}
+  .steps li.done : :before {
+  background : var(--brand);
+}
+.close-x {
+  position : absolute; top: 8px; right: 8px; background: none; border: 0; font-size: 26px; min-width: 44px; min-height: 44px; color : var(--ink);
+}
+.toast {
+  position : fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--ink); color: var(--white); padding: 12px 18px; border-radius: 10px; font-size: 14px; opacity: 0; pointer-events: none; transition: all .3s; z-index: 50; max-width: calc(100% - 32px); text-align : center;
+}
+.toast.show {
+  opacity : 1; transform : translate(-50%, 0);
+}
+.slider {
+  margin : 16px; background: var(--soft); border-radius: 12px; overflow : hidden;
+}
+.slider .track {
+  display : flex; transition : transform .5s ease;
+}
+.slide {
+  flex : 0 0 100%; box-sizing: border-box; padding: 24px 24px 20px; text-align : center;
+}
+.slide .art {
+  width : 100%; max-width: 280px; margin: 0 auto 8px; height : 150px;
+}
+.slide .rule {
+  width : 48px; height: 3px; background: var(--gold); margin: 0 auto 14px; border-radius : 2px;
+}
+.slide h1 {
+  font-size : 30px; color: var(--brand); line-height : 1.2;
+}
+.slide p {
+  color : var(--muted); font-size: 15px; line-height: 1.5; margin: 12px auto 20px; max-width : 320px;
+}
+.slider .controls {
+  display : flex; justify-content: center; align-items: center; gap: 10px; padding : 0 0 16px;
+}
+.slider .controls button.arrow {
+  background : none; border: 0; min-width: 44px; min-height: 44px; font-size: 24px; color : var(--brand);
+}
+.dot {
+  width : 12px; height: 12px; border-radius: 999px; border: 0; padding: 0; background :#c9bbbb;
+}
+.dot.on {
+  background : var(--brand);
+}
+.btn {
+  background : var(--brand); color: var(--white); border: 0; border-radius: 10px; padding: 0 28px; min-height: 48px; font-weight: 600; font-size : 15px;
+}
+.btn.light {
+  background : var(--white); color : var(--brand);
+}
+.btn.full {
+  width : 100%;
+}
+.cats {
+  padding : 0 16px 8px;
+}
+.cats h2 {
+  font-size : 20px; margin-bottom : 12px;
+}
+.cat-row {
+  display : flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width : none;
+}
+  .cat-row : :-webkit-scrollbar {
+  display : none;
+}
+.chip {
+  flex : 0 0 84px; background: none; border: 0; padding: 0; text-align: left; color : var(--ink);
+}
+.chip .tile {
+  display : block; height: 84px; border-radius: 12px; background: var(--soft); border: 2px solid var(--line); overflow : hidden;
+}
+.chip .tile svg {
+  width : 100%; height : 100%;
+}
+.chip .label {
+  display : block; font-size: 13px; margin-top : 6px;
+}
+.chip.active .tile {
+  border-color : var(--brand);
+}
+.chip.active .label {
+  color : var(--brand); font-weight : 600;
+}
+section.block {
+  padding : 20px 16px;
+}
+.sec-head {
+  display : flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; gap : 12px;
+}
+.sec-head h2 {
+  font-size : 24px;
+}
+.sec-head p {
+  color : var(--muted); font-size: 13px; margin-top : 4px;
+}
+.sec-head .link {
+  color : var(--brand); font-size: 14px; font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; background: none; border : 0;
+}
+.sub {
+  color : var(--muted); font-size: 14px; margin : 6px 0 16px;
+}
+.grid {
+  display : grid; grid-template-columns: repeat(2, 1fr); gap : 16px;
+}
+.card {
+  border : 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: var(--white); transition : box-shadow .2s;
+}
+  .card : hover {
+  box-shadow : 0 4px 12px rgba(41, 41, 41, .08);
+}
+.card .img {
+  position : relative; aspect-ratio: 3 / 4; background : var(--soft);
+}
+.card .img svg {
+  width : 100%; height : 100%;
+}
+.card .tag {
+  position : absolute; top: 8px; left: 8px; background: var(--white); color: var(--brand); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius : 6px;
+}
+.card .wish {
+  position : absolute; top: 6px; right: 6px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .92); color: #999; font-size: 18px; line-height: 36px; text-align : center;
+}
+.card .wish.on {
+  color : var(--brand);
+}
+.card .info {
+  padding : 12px; display: flex; flex-direction: column; gap: 4px; flex : 1;
+}
+.card h3 {
+  font-size : 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow : ellipsis;
+}
+.card .desc {
+  color : var(--muted); font-size: 13px; line-height : 1.4;
+}
+.card .price {
+  margin-top : auto; display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; padding-top : 6px;
+}
+.card .price strong {
+  font-size : 15px;
+}
+.card .price s {
+  color : var(--muted); font-size : 13px;
+}
+.card .price .off {
+  color : var(--brand); font-size: 12px; font-weight : 600;
+}
+.card .add {
+  margin-top : 8px; background: var(--brand); color: var(--white); border: 0; border-radius: 10px; min-height: 44px; font-weight: 600; font-size : 14px;
+}
+  .card .add : active {
+  transform : scale(.98);
+}
+.none {
+  grid-column : 1 / -1; text-align: center; color: var(--muted); padding: 32px 0; font-size : 14px;
+}
+.promo {
+  margin : 8px 16px 20px; padding: 28px 24px; background: var(--brand); color: var(--white); border-radius: 12px; display: flex; flex-direction: column; gap : 16px;
+}
+.promo h2 {
+  font-size : 24px;
+}
+.promo p {
+  font-size : 14px; margin-top: 6px; opacity : .9;
+}
+footer {
+  background : var(--brand); color: var(--white); padding: 32px 20px 24px; font-size : 14px;
+}
+.footer-cols {
+  display : grid; grid-template-columns: 1fr; gap : 24px;
+}
+.footer-cols h3 {
+  font-size : 15px; margin-bottom : 8px;
+}
+.footer-cols p {
+  line-height : 1.5; opacity : .9;
+}
+.footer-cols .links {
+  display : flex; flex-direction: column; gap: 8px; line-height : 1.4;
+}
+.footer-cols .links a, .footer-cols .links button {
+  color : var(--white); background: none; border: 0; text-align: left; padding: 0; font: inherit; min-height : 28px;
+}
+.foot-bottom {
+  border-top : 1px solid rgba(255, 255, 255, .25); margin-top: 24px; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size : 12px;
+}
+.foot-bottom a {
+  min-height : 44px; display: inline-flex; align-items : center;
+}
+  @media (min-width : 768px) {
+  .grid{grid-template-columns : repeat(4, 1fr);
+}
+.footer-cols {
+  grid-template-columns : repeat(4, 1fr);
+}
+.slide h1 {
+  font-size : 44px;
+}
+.promo {
+  flex-direction : row; align-items: center; justify-content : space-between;
+}
+.promo .btn {
+  margin-top : 0 !important;
+}
+.slide .art {
+  height : 200px;
+}
+}
+
+/* Diwali First Slide Background */
+
+.diwali-slide {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #722F42;
+    color: #ffffff;
+}
+
+/* Background Image */
+.diwali-slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url("diwali-couple-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0.45;
+    z-index: 0;
+}
+
+/* Dark Overlay */
+.diwali-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: rgba(30, 8, 18, 0.25);
+    z-index: 0;
+}
+
+/* Keep Text Above Background */
+.diwali-slide > * {
+    position: relative;
+    z-index: 1;
+}
+
+.diwali-slide h1,
+.diwali-slide p {
+    color: #ffffff;
+}
+
+/* Second Slide Background */
+.diwali-slide-2::before {
+    background-image: url("diwali-gift-bg.jpg");
+}
+
+/* Third Slide Background */
+.diwali-slide-3::before {
+    background-image: url("diwali-bg.jpg");
+}
+
+
+/* Mobile Diwali Slider Fix */
+@media (max-width: 576px) {
+
+    .slider {
+        margin: 12px;
+    }
+
+    .slide.diwali-slide {
+        min-height: 430px;
+        padding: 25px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Show Full Background Image */
+    .diwali-slide::before {
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.70;
+    }
+
+    /* Overlay */
+    .diwali-slide::after {
+        background: rgba(30, 8, 18, 0.30);
+    }
+
+    /* Text */
+    .diwali-slide h1 {
+        font-size: clamp(26px, 7vw, 34px);
+        color: #ffffff;
+    }
+
+    .diwali-slide p {
+        font-size: 14px;
+        color: #ffffff;
+        max-width: 290px;
+    }
+}
+/* Full Image Background - All Diwali Slides */
+
+.diwali-slide {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #722F42;
+}
+
+.diwali-slide::before {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+}
+
+.diwali-slide::after {
+    background: rgba(30, 8, 18, 0.15);
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+    .diwali-slide {
+        min-height: 380px;
+        padding: 25px 16px;
+        justify-content: center;
+    }
+
+    .diwali-slide::before {
+        background-size: cover !important;
+        background-position: center !important;
+    }
+}
+.text-darkred
+{
+	color:#212529;
+}
+
+.back-to-top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 11px;
+    background: #4A1D2B;
+    color: #FFFFFF !important;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    min-height: 48px;
+    transition: background 0.2s ease;
+}
+
+.back-to-top svg {
+    width: 22px;
+    height: 22px;
+}
+
+.back-to-top:hover {
+    background: #35121E;
+    text-decoration: none;
+}
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+.social-link svg {
+    flex-shrink: 0;
+}
+/* Diwali Slider Button Text Color */
+.diwali-slide .btn {
+    color: #212529 !important;
+}
+/* Wishlist Drawer Items */
+
+.wishlist-row .wish-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.wishlist-add {
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}

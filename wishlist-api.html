@@ -1,0 +1,124 @@
+<?php
+
+header("Content-Type: application/json; charset=utf-8");
+
+try {
+
+    require __DIR__ . "/db.php";
+
+    // Guest ID
+    $guestId = $_COOKIE['zoya_guest_id'] ?? '';
+
+    if (!preg_match('/^[a-f0-9]{64}$/', $guestId)) {
+
+        $guestId = bin2hex(random_bytes(32));
+
+        setcookie("zoya_guest_id", $guestId, [
+            "expires" => time() + (365 * 24 * 60 * 60),
+            "path" => "/",
+            "secure" => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+            "httponly" => true,
+            "samesite" => "Lax"
+        ]);
+    }
+
+    $action = $_GET['action'] ?? 'list';
+
+    $input = json_decode(file_get_contents("php://input"), true) ?? [];
+
+    $added = null;
+
+    // Add or toggle wishlist
+    if ($action === "toggle" || $action === "remove") {
+
+        $productId = filter_var(
+            $input['product_id'] ?? null,
+            FILTER_VALIDATE_INT
+        );
+
+        if (!$productId || $productId < 1) {
+            throw new InvalidArgumentException("Invalid product ID");
+        }
+
+        if ($action === "toggle") {
+
+            $stmt = $pdo->prepare("
+                INSERT IGNORE INTO wishlist_items
+                (guest_id, product_id)
+                VALUES (?, ?)
+            ");
+
+            $stmt->execute([$guestId, $productId]);
+
+            if ($stmt->rowCount() > 0) {
+
+                $added = true;
+
+            } else {
+
+                $stmt = $pdo->prepare("
+                    DELETE FROM wishlist_items
+                    WHERE guest_id = ? AND product_id = ?
+                ");
+
+                $stmt->execute([$guestId, $productId]);
+
+                $added = false;
+            }
+
+        } else {
+
+            $stmt = $pdo->prepare("
+                DELETE FROM wishlist_items
+                WHERE guest_id = ? AND product_id = ?
+            ");
+
+            $stmt->execute([$guestId, $productId]);
+        }
+
+    } elseif ($action !== "list") {
+
+        throw new InvalidArgumentException("Invalid action");
+    }
+
+    // Fetch wishlist
+    $stmt = $pdo->prepare("
+        SELECT product_id
+        FROM wishlist_items
+        WHERE guest_id = ?
+        ORDER BY created_at DESC
+    ");
+
+    $stmt->execute([$guestId]);
+
+    $ids = array_map(
+        'intval',
+        array_column($stmt->fetchAll(), 'product_id')
+    );
+
+    echo json_encode([
+        "success" => true,
+        "added" => $added,
+        "ids" => $ids
+    ]);
+
+} catch (InvalidArgumentException $e) {
+
+    http_response_code(400);
+
+    echo json_encode([
+        "success" => false,
+        "message" => $e->getMessage()
+    ]);
+
+} catch (Throwable $e) {
+
+    error_log($e->getMessage());
+
+    http_response_code(500);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Something went wrong"
+    ]);
+}
